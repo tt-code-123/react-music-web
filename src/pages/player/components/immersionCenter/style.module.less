@@ -1,0 +1,25 @@
+.musiclyrics {
+  position: relative;
+  height: 510px;
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  >ul {
+    position: absolute;
+    left: 50%;
+    width: 100%;
+    transform: translateX(-50%);
+    .musicLyricsLight {
+      color: #E91E63!important;
+    }
+    >li {
+      height: 50px;
+      width: 100%;
+      font-size: 22px;
+      line-height: 50px;
+      text-align: center;
+    }
+  }
+  
+}

@@ -1,0 +1,125 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+html #root,
+body #root {
+  width: 100%;
+  height: 100%;
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,.14);
+  border-radius: 6px;
+}
+html #root .app,
+body #root .app {
+  width: 100%;
+  height: 100%;
+}
+.login {
+  width: 100%;
+  height: 100%;
+  perspective: 1000px;
+  transform-style:preserve-3d;
+  .login-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    .bg-item{
+      height: 300px;
+      background-repeat: no-repeat;
+      background-position: top;
+    }
+    .bg1 {
+      background-image: url('~@/assets/img/login_bg1.jpg');
+    }
+    .bg2 {
+      background-image: url('~@/assets/img/login_bg2.jpg');
+    }
+    .bg3 {
+      background-image: url('~@/assets/img/login_bg3.jpg');
+    }
+  }
+  .login-dot,.login-line{
+    position: absolute;
+    left: 50%;
+  }
+  .login-dot {
+    font-size: 0;
+    background-image: url('~@/assets/img/login_bg4.png');
+    top: 148px;
+    width: 1238px;
+    height: 290px;
+    margin-left: -620px;
+    background-position: 0 -1440px;
+    z-index: 2;
+    animation:dot 1.1s ease-in-out .5s
+  }
+  .login-line {
+    top: 0;
+    width: 1480px;
+    margin-left: -780px;
+    height: 814px;
+    background-image: url('~@/assets/img/login_bg4.png');
+    background-position: 0 -640px;
+    z-index: 2;
+    animation:line 1s ease-in .6s
+  }
+  .login-header {
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    height: 80px;
+    color: #fff;
+    font-size: 20px;
+    line-height: 80px;
+    font-family: Tahoma,\5FAE\8F6F\96C5\9ED1,sans-serif;
+    background-color: rgba(0,0,0,.14);
+  }
+  .login-form {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    .form {
+      position: absolute;
+      top: 200px;
+      left: 50%;
+      width: 300px;
+      transform: translate(-50%,0);
+      z-index: 2;
+      .form-button-register {
+        width: 48%;
+      }
+    }
+  }
+  
+}
+
+@keyframes dot {
+  0% {
+    opacity: 0;
+    transform: translateZ(200px)
+  }
+  100%{
+    opacity: 1;
+    transform: translateZ(0)
+  }
+}
+@keyframes line {
+  0% {
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}

@@ -1,0 +1,53 @@
+.delAllBtn {
+  margin-bottom: 15px;
+}
+.musicList {
+  input[type='checkbox'] {
+    width: 16px;
+    height: 16px;
+    &:checked {
+      background-color: #e91e63;
+      -webkit-appearance:none;
+    }
+  }
+  width: 100%;
+  thead {
+    font-size: 12px;
+    color: #fff;
+    >tr {
+      height: 50px;
+      line-height: 50px;
+      input {
+        vertical-align: middle;
+      }
+    }
+  }
+  tbody {
+    .playlistTr {
+      color: #e91e63;
+    }
+    tr {
+      height: 50px;
+      line-height: 50px;
+      color: #fff;
+      font-size: 14px;
+      td {
+        .delIcon,.likeIcon {
+          &:hover {
+            color: #e91e63;
+            cursor: pointer;
+          }
+        }
+      }
+      td:nth-child(3) {
+        &:hover {
+          color: #e91e63;
+          cursor: pointer;
+        }
+      }
+      &:hover {
+        background-color: hsla(0,0%,100%,.05);
+      }
+    }
+  }
+}

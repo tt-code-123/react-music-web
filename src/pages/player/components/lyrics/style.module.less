@@ -1,0 +1,49 @@
+.musicWrapper {
+  width: 62%;
+  margin: 0 auto;
+  .musicImg {
+    text-align: center;
+    >img {
+      width: 200px;
+      height: 200px;
+    }
+  }
+  .musicInfo {
+    margin-top: 10px;
+    text-align: center;
+    >p {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      height: 30px;
+      line-height: 30px;
+    }
+  }
+  .musiclyrics {
+    position: relative;
+    height: 151px;
+    overflow: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    >ul {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      .musicLyricsLight {
+        color: #fff;
+        font-size: 14px;
+      }
+      >li {
+        height: 30px;
+        width: 200px;
+        line-height: 30px;
+        text-align: center;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+    
+  }
+}

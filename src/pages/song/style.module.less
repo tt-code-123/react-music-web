@@ -1,0 +1,108 @@
+.songWrapper {
+  width: 100%;
+  overflow: hidden;
+  .songHeader {
+    position: relative;
+    height: 400px;
+    width: 100%;
+    .songBgBlur {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+      opacity: .3;
+      filter: blur(2rem);
+      >img {
+        width: 100%;
+      }
+    }
+    .songInfoBox {
+      display: flex;
+      width: 1200px;
+      margin: 0px auto;
+      >img {
+        width: 300px;
+      }
+      .songInfo {
+        flex: 1;
+        margin-left: 50px;
+        .songName {
+          color: #333;
+          font-size: 28px;
+          font-weight: 700;
+          height: 40px;
+        }
+        .songSinger {
+          margin-top: 10px;
+          >span {
+            margin-right: 10px;
+            vertical-align: middle;
+          }
+          span:nth-child(2) {
+            &:hover {
+              color: #e91e63;
+              cursor: pointer;
+            }
+          }
+        }
+        .songAbout {
+          margin-top: 30px;
+          >p {
+            margin: 10px 0;
+          }
+          p:nth-child(3) {
+            >span {
+              &:hover {
+                color: #e91e63;
+                cursor: pointer;
+              }
+            }
+          }
+        }
+        .songSpace {
+          margin-top: 20px;
+          button {
+            border-radius: 20px;
+          }
+        }
+      }
+    }
+  }
+  .songLyricsBox {
+    width: 1200px;
+    margin: 56px auto 0 auto;
+    >h2 {
+      font-size: 24px;
+      color: #333;
+    }
+    .songLyrics {
+      margin-top: 24px;
+      height: 540px;
+      overflow: hidden;
+      >p {
+        height: 30px;
+      }
+    }
+    .isOpenSpan {
+      color: #e91e63;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+.songDropdown  {
+  width: 360px;
+  >ul{
+    >li {
+      height: 40px;
+      padding: 0 28px;
+      &:hover {
+        background-color: #e91e63;
+      }
+    }
+  }
+}

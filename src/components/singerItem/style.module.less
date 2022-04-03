@@ -1,0 +1,42 @@
+.homeSingerWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 191px;
+  max-height: 573px;
+  margin-bottom: 5px;
+  .homeSingerBox {
+    position: relative;
+    background-color: #f8f8f8;
+    width: 15%;
+    border-radius: 8px;
+    margin-right: 20px;
+    .homeSingerImgBox {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      width: 122px;
+      height: 122px;
+      border-radius: 50%;
+      background-color: red;
+      overflow: hidden;
+      img {
+        transition: all 1s;
+      }
+    }
+    p {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      &:hover {
+        cursor: pointer;
+        color: #e91e63;
+      }
+    }
+    &:hover img{
+      cursor: pointer;
+      transform: scale(1.1);
+    }
+  }
+}

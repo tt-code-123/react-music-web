@@ -1,0 +1,76 @@
+.singerDetailWrapper {
+  width: 100%;
+  .singerDetailHeader {
+    position: relative;
+    width: 100%;
+    height: 350px;
+    .singerDetailBg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: .3;
+      z-index: -1;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: 50%;
+      filter: blur(2rem);
+      text-align: center;
+    }
+    .singerInfo {
+      width: 800px;
+      margin: 0 auto;
+      .singerAvatart {
+        margin: 0 auto;
+        width: 171px;
+        height: 171px;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+      .singerName {
+        text-align: center;
+        margin: 20px 0;
+        >h2 {
+          font-weight: 700;
+          font-size: 28px;
+        }
+      }
+      .singerIntro {
+        display: flex;
+        width: 100%;
+        p:nth-child(2) {
+          color: #e91e63;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+        p:nth-child(1) {
+          width: 90%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+  .hotSong {
+    th {
+      border-bottom: 0;
+      background: #fff;
+    }
+    tr {
+      &:hover td {
+        background-color: #f2f2f2;
+      }
+    }
+    td {
+      border-bottom: 0!important;
+    }
+  }
+  .hotAlbum {
+    .pagination {
+      text-align: right;
+    }
+  }
+}

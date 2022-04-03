@@ -1,0 +1,35 @@
+.musicListWrapper {
+  position: relative;
+  height: 100%;
+  >ul{
+    position: absolute;
+    height: 290px;
+    width: 250px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    overflow: auto;
+    >li {
+      font-size: 14px;
+      color: hsla(0,0%,99.6%,.5);
+      height: 50px;
+      line-height: 50px;
+      width: 100%;
+      display: flex;
+      div:nth-child(1) {
+        width: 50px;
+      }
+      div:nth-child(2) {
+        flex: 1;
+        height: 50px;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+    .playlistLi {
+      color: #e91e63!important;
+    }
+  }
+}
+

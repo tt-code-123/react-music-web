@@ -1,0 +1,104 @@
+.footerOuter {
+  position: relative;
+  width: 100%;
+  box-shadow:  0 2px 10px rgba(0, 0, 0, .1);
+  padding-bottom: 25px;
+  top: 100px;
+  .footerWrapper {
+    width: 1200px;
+    overflow: hidden;
+    margin: 0 auto;
+    .footerTop {
+      display: flex;
+      width: 100%;
+      .footerLeft {
+        display: flex;
+        margin-top: 20px;
+        width: 80%;
+        dl {
+          flex: 1;
+          font-size: 12px;
+          dd {
+            margin: 20px 0;
+          }
+          dt {
+            margin: 15px 0;
+            &:hover {
+              color: #e91e63;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+      .footerRight {
+        margin-top: 20px;
+        dd {
+          font-size: 12px;
+          margin-top: 20px;
+        }
+        dt {
+          width: 130px;
+          margin-left: -12px;
+        }
+      }
+    }
+    .footerBottom {
+      margin-top: 20px;
+      text-align: center;
+      span {
+        font-size: 12px;
+        padding: 0 5px;
+        border-right: 1px solid #ccc;
+        &:nth-child(10){
+          border-right: 0;
+        }
+        &:nth-child(14){
+          border-right: 0;
+        }
+      }
+      p {
+        margin: 6px 0;
+      }
+    }
+  }
+  .footerBtn {
+    position: fixed;
+    width: 54px;
+    right: 0;
+    bottom: 55px;
+    text-align: center;
+    .footerTopBtn {
+      display: none;
+      width: 54px;
+      height: 54px;
+      color: #fff;
+      font-size: 28px;
+      line-height: 54px;
+      background-color: #626262;
+      margin-bottom: 1px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    >div {
+      width: 100%;
+      height: 54px;
+      background-color: #626262;
+      &:hover .footerPlayBtn{
+        cursor: pointer;
+        background-position: -44px -40px;
+      }
+      .footerPlayBtn {
+        display: inline-block;
+        margin-top: 50%;
+        transform: translateY(-50%);
+        width: 36px;
+        height: 36px;
+        background-image: url('~@/assets/img/icon_footer.png');
+        background-position: -44px -3px;
+        z-index: 100;
+      }
+    }
+    
+  }
+}

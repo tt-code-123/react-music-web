@@ -1,0 +1,102 @@
+.albumDetailHeader {
+  position: relative;
+  height: 360px;
+  .albumDetailBg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+    opacity: .3;
+    z-index: -1;
+    filter: blur(2rem);
+    >img {
+      width: 100%;
+    }
+  }
+  .albumDetailnfoBox {
+    display: flex;
+    width: 1200px;
+    margin: 0 auto;
+    .albumImgBox {
+      position: relative;
+      width: 20%;
+      >img {
+        width: 245px;
+        height: 245px;
+      }
+      &::after {
+        position: absolute;
+        display: inline-block;
+        width: 245px;
+        height: 245px;
+        top: 0px;
+        left: 32px;
+        content: "";
+        z-index: -1;
+        background: url('~@/assets/img/album-cover.png') right center no-repeat;
+        background-size: contain;
+      }
+    } 
+    .albumDetailnfo {
+      flex: 1;
+      min-width:0;
+      overflow: hidden;
+      margin-left: 80px;
+      >h2 {
+        font-size: 28px;
+        font-weight: 700;
+      }
+      .songSinger {
+        margin: 22px 0;
+        >span {
+          margin-right: 10px;
+          vertical-align: middle;
+        }
+        span:nth-child(2) {
+          &:hover {
+            color: #e91e63;
+            cursor: pointer;
+          }
+        }
+      }
+      .releaseInfo {
+        color: #000000;
+        >span {
+          margin-right: 40px;
+        }
+      }
+      .albumIntroduction {
+        display: flex;
+        height: 21px;
+        margin: 20px 0;
+        >p {
+          width: 80%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        >span {
+          color: #e91e63;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
+
+.addDropdown  {
+  width: 360px;
+  >ul{
+    >li {
+      height: 40px;
+      padding: 0 28px;
+      &:hover {
+        background-color: #e91e63;
+      }
+    }
+  }
+}

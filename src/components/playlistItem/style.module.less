@@ -1,0 +1,115 @@
+.homeRecommend {
+  display: flex;
+  .homeJay{
+    width: 20%;
+    border-radius: 8px;
+    background-image: url('~@/assets/img/zhou.jfif');
+    background-position: -20px 0px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-right: 18px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .homeRecommednPlaylist {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    .box {
+      width: 20%;
+      .bgBox {
+        position: relative;
+        height: 159px;
+        width: 159px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        border-radius: 8px;
+        overflow: hidden;
+        .coverPlay {
+          position: absolute;
+          opacity: 0;
+          width: 49px;
+          height: 49px;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%,-50%);
+          transition: all 1s;
+        }
+        .damaskeen {
+          position: absolute;
+          opacity: 0;
+          width: 49px;
+          height: 49px;
+          top: 50%;
+          left: 50%;
+          border-radius: 50%;
+          box-shadow: 0 0 12px #e91e63;
+          transform: translate(-50%,-50%);
+          transition: all 1s;
+          z-index: 10;
+          &:hover {
+            animation: pulse 1s linear;
+          }
+        }
+        .bgPlay {
+          transition: all 1s;
+        }
+        &:hover {
+          cursor: pointer;
+        }
+        &:hover .bgPlay{
+          transform: scale(1.2);
+        }
+        &:hover .coverPlay{
+          opacity: 1;
+        }
+        
+        >span {
+          position: absolute;
+          display: inline-block;
+          text-align: center;
+          height: 24px;
+          line-height: 24px;
+          padding: 0 8px;
+          border-radius: 12px;
+          top: 6px;
+          right: 10px;
+          font-size: 12px;
+          background: rgba(0, 0, 0, .4);
+          color: #fff;
+          >span {
+            padding-right: 5px;
+          }
+        }
+      }
+      >p {
+        margin: 15px 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 14px;
+        color: #666666;
+        width: 159px;
+        padding-left: 4px;
+      }
+      &:nth-child(n+5) >p{
+        margin-bottom: 0px;
+      }
+    }
+    
+  }
+}
+
+@keyframes pulse {
+  from {
+    
+  }
+  to {
+    width: 80px;
+    height: 80px;
+    opacity: 1;
+  }
+  
+}

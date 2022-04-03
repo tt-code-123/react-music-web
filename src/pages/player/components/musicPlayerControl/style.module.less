@@ -1,0 +1,67 @@
+.playerControlWrapper {
+  position: fixed;
+  align-items: flex-start;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  width: 1200px;
+  height: 110px;
+  line-height: 110px;
+  color: #fff;
+  .playerControlLeft {
+    font-size: 40px;
+    >span {
+      &:hover {
+        cursor: pointer;
+      }
+      margin-left: 10px;
+    }
+  }
+  .playerControlCenter {
+    flex: 1;
+    margin-left: 20px;
+    padding-top: 28px;
+    .playerInfoBox {
+      display: flex;
+      justify-content: space-between;
+      color: #e0e0e0;
+      height: 21px;
+      line-height: 21px;
+      >h2 {
+        margin-right: 6px;
+        color: #e0e0e0;
+        span:last-child {
+          color: #959595;
+        }
+      }
+    }
+  }
+  .playerControlRight {
+    display: flex;
+    width: 20%;
+    font-size: 25px;
+    >div {
+      margin-left: 15px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    >div:last-child {
+      flex: 1;
+      margin-top: 50px;
+    }
+  }
+}
+
+.lyricsMessage {
+  >div {
+    background: rgba(0, 0, 0, .4);
+    >div{
+      >span {
+        color: #e91e63;
+        font-size: 25px;
+      }
+    }
+  }
+}
