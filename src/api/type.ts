@@ -15,32 +15,31 @@ export interface MusicType {
   music_url: string
   music_second: string
   music_lyrics: string
-  music_tag:string
+  music_tag: string
   singer_id: string
 }
 export interface RecommendPlaylist {
   _id: string
   playlist_amount: string
   playlist_img: string
-  playlist_name:string
+  playlist_name: string
 }
 export interface PlaylistType extends ResponseType {
   data: {
-    playlist: RecommendPlaylist[],
-    todoCount:number
+    playlist: RecommendPlaylist[]
+    todoCount: number
   }
-  
 }
 export interface SingerType {
   _id: string
   singer_img: string
   singer_introduction: string
-  singer_name:string
+  singer_name: string
 }
 export interface ResponseType {
   data: any
   status: number
-  msg?:string
+  msg?: string
 }
 
 /** 搜索接口返回类型 */
@@ -50,13 +49,13 @@ export interface MusicInfo {
   music_second: string
   singer_id: string
   album_id: string
-} 
+}
 export interface SingerInfo {
   _id: string
   singer_name: string
   singer_img: string
 }
-export interface SeachResponseType extends ResponseType{
+export interface SeachResponseType extends ResponseType {
   data: {
     albumCount?: number
     musicCount?: number
@@ -75,7 +74,7 @@ export interface MusicByIdType extends ResponseType {
     music_img: string
     music_url: string
     music_lyrics: string
-    music_tag:string
+    music_tag: string
     singer_id: string
     album_name: string
     singer_name: string
@@ -98,7 +97,7 @@ export interface MusicInfo {
 }
 export interface MusicBySingerId extends ResponseType {
   data: {
-    musicInfo: MusicInfo[],
+    musicInfo: MusicInfo[]
     musicCount: number
   }
 }
@@ -110,13 +109,13 @@ export interface AlbumInfo {
   singer_id: string
   album_img: string
   singer_name: string
-  release_time:string
+  release_time: string
 }
 export interface AlbumBySingerId extends ResponseType {
   data: {
     albumCount: number
     albumInfo: AlbumInfo[]
-    singerName : string
+    singerName: string
   }
 }
 
@@ -156,13 +155,12 @@ export interface MusicByAlbumId extends ResponseType {
 
 /** 根据专辑id获取歌曲Id接口返回类型 */
 export interface MusicIdByAlbumId extends ResponseType {
-  data:string[]
+  data: string[]
 }
-
 
 /** 歌手其他专辑接口返回类型 */
 export interface OtherAlbum extends ResponseType {
-  data:AlbumInfo[]
+  data: AlbumInfo[]
 }
 
 /** 根据歌曲id数组获取歌曲接口返回类型 */
@@ -173,7 +171,7 @@ export interface MusicArrInfo {
   music_url: string
   music_lyrics: string
   music_time: string
-  music_second:string
+  music_second: string
   singer_id: string
   singer_name: string
   isChecked?: boolean
@@ -181,7 +179,6 @@ export interface MusicArrInfo {
 export interface MusicByIdArrType extends ResponseType {
   data: MusicArrInfo[]
 }
-
 
 /** 根据用户id获取喜欢歌曲接口返回类型 */
 export interface UserLikeMusicType extends ResponseType {
@@ -196,5 +193,15 @@ export interface SingerAllType extends ResponseType {
   data: {
     totalCount: number
     singerArr: SingerInfo[]
+  }
+}
+
+/** 根据歌手国籍、性别返回歌手信息接口返回类型 */
+export interface UserInfoType extends ResponseType {
+  data: {
+    username: string
+    _id: string
+    password: string
+    avatar_url: string
   }
 }

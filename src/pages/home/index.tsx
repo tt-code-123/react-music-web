@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
+import { useNavigate } from 'react-router-dom'
+import { Carousel } from 'antd'
 
 import { getBannerUrl, getRecommendAlbum, getRecommendPlaylist, getTageUrl, getRecommendSinger } from '@/api'
-import { Carousel } from 'antd'
 import { BASE_URL } from '@/config'
 import LayoutTitle from '@/components/layoutTitle'
 import PlaylistItem from '@/components/playlistItem'
@@ -27,6 +28,7 @@ const Home: React.FC = () => {
   /** 推荐歌手*/
   const [recommendSinger, setRecommendSinger] = useState<SingerType[]>([])
   const carouselRef = useRef(null)
+  const navigate = useNavigate()
   useEffect(() => {
     /** 获取轮播图图片url */
     getBannerUrl().then((res) => {
@@ -62,7 +64,11 @@ const Home: React.FC = () => {
 
   const musicPeopl = useMemo(() => {
     return (
-      <LayoutTitle title="音乐人">
+      <LayoutTitle
+        title="音乐人"
+        toMore={() => {
+          navigate('/t/singer')
+        }}>
         <SingerItem singerArr={recommendSinger} />
       </LayoutTitle>
     )
@@ -70,7 +76,11 @@ const Home: React.FC = () => {
 
   const albumRecommend = useMemo(() => {
     return (
-      <LayoutTitle title="专辑推荐">
+      <LayoutTitle
+        title="专辑推荐"
+        toMore={() => {
+          navigate('/t/album')
+        }}>
         <AlbumItem albumArr={recommednAlbum} />
       </LayoutTitle>
     )
@@ -78,7 +88,11 @@ const Home: React.FC = () => {
 
   const albumList = useMemo(() => {
     return (
-      <LayoutTitle title="歌单推荐">
+      <LayoutTitle
+        title="歌单推荐"
+        toMore={() => {
+          navigate('/t/playlist')
+        }}>
         <PlaylistItem playlistArr={recommendPlaylist} />
       </LayoutTitle>
     )

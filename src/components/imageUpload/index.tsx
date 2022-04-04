@@ -2,23 +2,19 @@ import React, { useState } from 'react'
 import { Upload, Modal, message, Button } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import style from './style.module.less'
+import { BASE_URL } from '@/config'
 
 interface IProps {
   maxLength?: number
   value?: any
   _id?: string
+  multiple?: boolean
+  showUploadList?: boolean
   onChange?: (obj: any) => void
 }
 
-const imgTempObj = {
-  uid: '-1',
-  name: 'image.png',
-  size: 2048,
-  type: 'image/png',
-  status: 'done',
-}
 const ImgUpload: React.FC<IProps> = (props) => {
-  const { value, onChange, maxLength = 1, _id } = props
+  const { value, onChange, maxLength = 1, _id, showUploadList = true, multiple = false } = props
   const [previewVisible, setPreviewVisible] = useState(false)
   const [previewImage, setPreviewImage] = useState('')
   /**
@@ -48,7 +44,7 @@ const ImgUpload: React.FC<IProps> = (props) => {
   }
   const uploadButton = (
     <Button type="dashed" icon={<PlusOutlined />} block>
-      上传图片
+      上传头像
     </Button>
   )
 
@@ -66,39 +62,28 @@ const ImgUpload: React.FC<IProps> = (props) => {
     }
     return isLt5M && isJpgOrPng
   }
-  const imgList = value && value.length > 0 ? value.map((v, i) => ({ ...imgTempObj, uid: i, ...v })) : []
 
   const imgListChange = (e) => {
-    if (onChange) {
-      onChange(
-        e.fileList.map((v) => {
-          return v.status === 'done'
-            ? {
-                fileId: v?.response?.fileId ? v?.response?.fileId : v.id,
-                fileUrl: v?.response?.fileUrl ? v?.response?.fileUrl : v.url,
-                filename: v?.response?.filename ? v?.response?.filename : v.name,
-                url: v?.response?.fileUrl,
-                status: 'done',
-              }
-            : v
-        }),
-      )
-    }
+    onChange && onChange(e)
   }
+
   return (
     <>
       <Upload
+        name="image"
         action="http://localhost:8081/user/upload/avatar"
         accept="image/png, image/jpeg, image/gif, image/jpg"
         beforeUpload={beforeUpload}
         listType="picture"
-        fileList={imgList}
-        data={{ _id }}
+        fileList={value}
+        multiple={multiple}
+        showUploadList={showUploadList}
+        headers={{ _id: _id }}
         onPreview={handlePreview}
         className={style.imgList}
         maxCount={maxLength}
         onChange={imgListChange}>
-        {imgList.length >= maxLength ? null : uploadButton}
+        {uploadButton}
       </Upload>
       <Modal maskClosable={false} visible={previewVisible} footer={null} onCancel={handleCancel} destroyOnClose>
         <img alt="example" className={style.img} src={previewImage} />

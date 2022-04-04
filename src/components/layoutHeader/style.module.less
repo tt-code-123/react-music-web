@@ -28,3 +28,36 @@
     }
   }
 }
+.userInfoWrapper {
+  width: 200px;
+  .userInfo {
+    display: flex;
+    width: 100%;
+    .userAvatar {
+      width: 40%;
+    }
+    span:nth-child(3){
+      line-height: 42px;
+    }
+    >div {
+      font-size: 18px;
+      flex:1;
+      line-height: 42px;
+      padding-left: 20px;
+    }
+  }
+  >p {
+    margin-top: 10px;
+    text-align: end;
+    height: 40px;
+    line-height: 40px;
+    background-color: #f2f2f2;
+    padding-right: 10px;
+    >span {
+      &:hover{
+        cursor: pointer;
+      }
+    }
+  }
+}
+

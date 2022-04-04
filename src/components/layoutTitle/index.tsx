@@ -5,14 +5,15 @@ import styles from './style.module.less'
 
 interface IProps {
   title: string
+  toMore?: () => void
 }
 
-const LayoutTitle: React.FC<IProps> = ({ title, children }) => {
+const LayoutTitle: React.FC<IProps> = ({ title, children, toMore }) => {
   return (
     <div className={styles.titleWrapper}>
       <div className={styles.titleHeader}>
         <h2 className={styles.titleText}>{title}</h2>
-        <span className={styles.titleMore}>
+        <span className={styles.titleMore} onClick={() => toMore()}>
           更多&nbsp;
           <RightCircleOutlined />
         </span>

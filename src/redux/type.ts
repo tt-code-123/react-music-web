@@ -1,10 +1,17 @@
-import { MusicArrInfo } from "@/api/type"
+import { MusicArrInfo } from '@/api/type'
 
 /** 登录初始值类型 */
 export interface LoginStateType {
-  user: Object | null
+  user: UserInfoType | ''
   token: string
-  isLogin:boolean
+  isLogin: boolean
+}
+
+export interface UserInfoType {
+  username: string
+  _id: string
+  password: string
+  avatar_url: string
 }
 
 /** 打开默认播放列表初始值类型 */
