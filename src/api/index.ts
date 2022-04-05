@@ -13,6 +13,7 @@ import {
   PlaylistType,
   RecommendAlbum,
   SeachResponseType,
+  SeachSuggestResponseType,
   SingerAllType,
   SingerById,
   SingerType,
@@ -52,6 +53,10 @@ export const getRecommendSinger = (): Promise<AxiosResponse<SingerType[], any>> 
 // 搜索歌手、歌曲接口
 export const getSearchAll = (inputValue: string, pageNum: number = 1, pageSize: number = 15): Promise<SeachResponseType> => {
   return request.get(`${BASE_URL}/search/all`, { params: { inputValue, pageSize, pageNum } })
+}
+// 搜索联想接口
+export const getSearchSuggest = (keywords: string): Promise<SeachSuggestResponseType> => {
+  return request.get(`${BASE_URL}/search/suggest`, { params: { keywords } })
 }
 
 // 根据歌曲id获取歌曲

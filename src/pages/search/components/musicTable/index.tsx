@@ -11,13 +11,14 @@ import styles from './style.module.less'
 
 interface IProps {
   musicCount: number
+  total: number
   musicList: MusicInfo[]
   searchInputValue: string
   singerList: SingerInfo[]
   albumList: AlbumInfo[]
   search: (inputValue: string, pageNum?: number, pageSize?: number) => void
 }
-const MusicTable: React.FC<IProps> = ({ musicCount, musicList, searchInputValue, singerList, albumList, search }) => {
+const MusicTable: React.FC<IProps> = ({ musicCount, musicList, searchInputValue, singerList, albumList, total, search }) => {
   const [selectRowKeys, setSelectRowKeys] = useState<string[]>([])
   const navigate = useNavigate()
   const columns: ColumnsType<MusicInfo> = [
@@ -87,7 +88,12 @@ const MusicTable: React.FC<IProps> = ({ musicCount, musicList, searchInputValue,
   return (
     <>
       <Table
-        pagination={{ defaultPageSize: 15, total: musicCount, onChange: handlePageClick }}
+        pagination={{
+          defaultPageSize: 15,
+          defaultCurrent: 1,
+          total: musicCount === total ? musicCount : total,
+          onChange: handlePageClick,
+        }}
         rowKey="_id"
         dataSource={musicList}
         rowSelection={{ ...rowSelection }}

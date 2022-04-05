@@ -26,6 +26,7 @@ const Search: React.FC = () => {
   const [musicList, setMusicList] = useState<MusicInfo[]>([])
   const [albumCount, setAlbumCount] = useState<number>(0)
   const [musicCount, setMusicCount] = useState<number>(0)
+  const [total, setTotal] = useState<number>(0)
   const navigate = useNavigate()
   useEffect(() => {
     setSearchInputValue(searchParams.get('keywords'))
@@ -45,12 +46,13 @@ const Search: React.FC = () => {
         message.error(res.msg)
         navigate('/')
       } else {
-        const { albumCount, albumList, singerList, musicCount, musicList } = res.data
+        const { albumCount, albumList, singerList, musicCount, musicList, total } = res.data
         setSingerList(singerList)
         setMusicList(musicList)
         setAlbumList(albumList)
         setAlbumCount(albumCount)
         setMusicCount(musicCount)
+        setTotal(total)
       }
     })
   }
@@ -102,6 +104,7 @@ const Search: React.FC = () => {
           <Tabs defaultActiveKey="1">
             <TabPane tab="歌曲" key="1">
               <MusicTable
+                total={total}
                 musicCount={musicCount}
                 musicList={musicList}
                 search={search}

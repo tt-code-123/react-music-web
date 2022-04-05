@@ -9,8 +9,8 @@ import { ReducerStates } from '@/redux/reducers'
 import { deleteUserInfoAction, updateUserInfoAction } from '@/redux/action-creaters'
 import ImgUpload from '../imageUpload'
 import { BASE_URL } from '@/config'
-import styles from './style.module.less'
 import { getUserInfoByUserId } from '@/api'
+import styles from './style.module.less'
 
 const LayoutHeader: React.FC = ({ children }) => {
   const [file, setFile] = useState<UploadFile[]>([])
@@ -29,9 +29,11 @@ const LayoutHeader: React.FC = ({ children }) => {
     icon: user && user.avatar_url ? '' : <UserOutlined />,
     size: 42,
   }
+  /** 退出登录的回调 */
   const logOut = () => {
     dispatch(deleteUserInfoAction())
   }
+  /** 上传头像的onChange */
   const handleUploadChange = (e) => {
     if (e.file.status === 'done') {
       getUserInfoByUserId(user && user._id).then((data) => {

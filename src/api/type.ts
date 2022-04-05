@@ -59,9 +59,17 @@ export interface SeachResponseType extends ResponseType {
   data: {
     albumCount?: number
     musicCount?: number
+    total?: number
     albumList?: AlbumInfo[]
     musicList?: MusicInfo[]
     singerList?: SingerInfo[]
+  }
+}
+/** 搜索联想接口返回类型 */
+export interface SeachSuggestResponseType extends ResponseType {
+  data: {
+    singer?: [{ _id: string; singer_name: string }]
+    music?: [{ _id: string; music_name: string }]
   }
 }
 

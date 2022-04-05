@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { message, Switch } from 'antd'
-import { SearchOutlined } from '@ant-design/icons'
+import { CloseOutlined, CustomerServiceOutlined, SearchOutlined, UserOutlined } from '@ant-design/icons'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 import LayoutHeader from '@/components/layoutHeader'
 import MusicList from './components/musicList'
@@ -9,19 +10,22 @@ import Lyrics from './components/lyrics'
 import ImmersionCenter from './components/immersionCenter'
 import MusicPlayerControl from './components/musicPlayerControl'
 import { ReducerStates } from '@/redux/reducers'
-import { getMusicByIdArr } from '@/api'
-import { MusicArrInfo } from '@/api/type'
+import { getMusicByIdArr, getSearchSuggest } from '@/api'
+import { MusicArrInfo, SeachSuggestResponseType } from '@/api/type'
 import { BASE_URL } from '@/config'
 import { deletePlayCurrentMusicInfo, saveIsPlayingStatus, saveLikePlaylistAction } from '@/redux/action-creaters'
-import styles from './style.module.less'
 import ImmersionRight from './components/immersionRight'
 import { saveCurrentMusicIndex, saveCurrentMusicLyricsIndex } from '@/redux/action-creaters/play-action'
-import { useNavigate } from 'react-router-dom'
+import styles from './style.module.less'
+import { debounce } from 'lodash'
 
 const Player: React.FC = () => {
   /** 默认播放列表 */
   const [defPlaylist, setDefPlaylist] = useState<MusicArrInfo[]>([])
+  const [history, setHistory] = useState<string[]>([])
   const inputSearchRef = useRef(null)
+  const inputDropDownRef = useRef(null)
+  const [searchInfo, setSearchInfo] = useState<SeachSuggestResponseType['data']>(null)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { likePlayList, defaultPlaylist, isPlaying, currentMusicInfo } = useSelector(
@@ -82,6 +86,11 @@ const Player: React.FC = () => {
       dispatch(deletePlayCurrentMusicInfo())
     }
   }, [])
+  useEffect(() => {
+    const historyStr = localStorage.getItem('history')
+    if (historyStr === JSON.stringify(history)) return
+    historyStr && setHistory(JSON.parse(historyStr) as Array<string>)
+  }, [JSON.stringify(history)])
   /** 处理沉浸式开关按钮的回调 */
   const handleSwitchChange = useCallback((checked: boolean) => {
     setIsImmersion(checked)
@@ -103,6 +112,51 @@ const Player: React.FC = () => {
       navigate(`/search?keywords=${value}`)
     }
   }
+  /** 点击搜索历史的回调 */
+  const clickHistory = (value: string) => {
+    navigate(`/search?keywords=${value}`)
+  }
+  /** 清除所有的搜索历史 */
+  const clearAllHistory = () => {
+    setHistory([])
+    localStorage.removeItem('history')
+  }
+  /** 清除单个的搜索历史 */
+  const clearSinHistory = (index, e) => {
+    e.stopPropagation()
+    const historyArr = [...history]
+    historyArr.splice(index, 1)
+    setHistory(historyArr)
+    localStorage.setItem('history', JSON.stringify(historyArr))
+  }
+  /** 处理失去焦点的回调 */
+  const handleBlur = () => {
+    inputDropDownRef.current.style.maxHeight = '0px'
+  }
+  /** 处理集中焦点的回调 */
+  const handleFocus = () => {
+    if (inputSearchRef.current.value) {
+      handleInput(inputSearchRef.current.value)
+    }
+    inputDropDownRef.current.style.maxHeight = '1000px'
+  }
+  const clickLenvo = (value: string) => {
+    if (!history.includes(value)) {
+      history.length == 5 && history.splice(history.length - 1, 1)
+      history.unshift(value)
+      localStorage.setItem('history', JSON.stringify(history))
+    }
+    navigate(`/search?keywords=${value}`)
+  }
+  const handleInput = debounce((value: string) => {
+    if (value) {
+      getSearchSuggest(value).then((data) => {
+        setSearchInfo(data.data)
+      })
+    } else {
+      setSearchInfo(null)
+    }
+  }, 500)
   return (
     <div className={styles.playerWrapper}>
       <LayoutHeader>
@@ -116,7 +170,71 @@ const Player: React.FC = () => {
           <Switch onChange={handleSwitchChange} checkedChildren="沉浸" unCheckedChildren="沉浸" />
         </div>
         <div className={styles.headerSearchInput}>
-          <input placeholder="搜索歌曲、歌手" ref={inputSearchRef} />
+          <input
+            placeholder="搜索歌曲、歌手"
+            ref={inputSearchRef}
+            onInput={() => handleInput(inputSearchRef.current.value)}
+            onBlur={handleBlur}
+            onFocus={handleFocus}
+          />
+          <div className={styles.inputDropDown} ref={inputDropDownRef}>
+            <ul>
+              <li>
+                {searchInfo ? (
+                  <div className={styles.lenvoBox}>
+                    {searchInfo.music.length ? (
+                      <>
+                        <p>
+                          <CustomerServiceOutlined />
+                          歌曲
+                        </p>
+                        {searchInfo.music.map((item) => {
+                          return (
+                            <div onClick={() => clickLenvo(item.music_name)} key={item._id}>
+                              {item.music_name}
+                            </div>
+                          )
+                        })}
+                      </>
+                    ) : null}
+                    {searchInfo.singer.length ? (
+                      <>
+                        <p>
+                          <UserOutlined />
+                          歌手
+                        </p>
+                        {searchInfo.singer.map((item) => {
+                          return (
+                            <div onClick={() => clickLenvo(item.singer_name)} key={item._id}>
+                              {item.singer_name}
+                            </div>
+                          )
+                        })}
+                      </>
+                    ) : null}
+                  </div>
+                ) : null}
+              </li>
+              <li>
+                {history.length ? (
+                  <div className={styles.historyBox}>
+                    <p>
+                      <span>搜索历史</span>
+                      <span onClick={() => clearAllHistory()}>清空</span>
+                    </p>
+                    {history.map((item, index) => (
+                      <div key={item}>
+                        <p onClick={() => clickHistory(item)}>
+                          {item}
+                          <CloseOutlined onClick={(e) => clearSinHistory(index, e)} />
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
+              </li>
+            </ul>
+          </div>
           <span className={styles.headerIcon} onClick={handleSearch}>
             <SearchOutlined />
           </span>
