@@ -213,3 +213,46 @@ export interface UserInfoType extends ResponseType {
     avatar_url: string
   }
 }
+
+/** 动态接口返回类型 */
+export interface CommentInfoType {
+  _id: string
+  content: string
+  dynamic_id: string
+  from_id: string
+  to_id: string
+  p_id: string
+  children?: any[]
+  create_time: string
+  isShowArea: boolean
+  value: string
+  from_user: {
+    _id: string
+    username: string
+    avatar_url: string
+  }
+  to_user: {
+    _id: string
+    username: string
+    avatar_url: string
+  }
+}
+export interface DynamicDataType {
+  _id: string
+  dynamic_content: string
+  user_id: string
+  image_file: string[]
+  release_time: string
+  isShowArea: boolean
+  value: string
+  like: boolean
+  commentInfo: CommentInfoType[]
+  userInfo: {
+    _id: string
+    username: string
+    avatar_url: string
+  }
+}
+export interface DynamicInfoType extends ResponseType {
+  data: DynamicDataType[]
+}

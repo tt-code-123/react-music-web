@@ -78,7 +78,7 @@ const ImgUpload: React.FC<IProps> = (props) => {
         fileList={value}
         multiple={multiple}
         showUploadList={showUploadList}
-        headers={{ _id: _id }}
+        headers={{ _id: _id, authorization: localStorage.getItem('token') }}
         onPreview={handlePreview}
         className={style.imgList}
         maxCount={maxLength}

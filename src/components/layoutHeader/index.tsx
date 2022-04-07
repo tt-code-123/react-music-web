@@ -48,7 +48,7 @@ const LayoutHeader: React.FC = ({ children }) => {
         <div className={styles.userInfoWrapper}>
           <div className={styles.userInfo}>
             <Avatar className={styles.userAvatar} {...avatarProps} />
-            <div>{user && token && isLogin && (user as any).username}</div>
+            <div>{user?.username}</div>
             <ImgUpload
               _id={(user as any)._id}
               onChange={(e) => {

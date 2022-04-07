@@ -1,0 +1,114 @@
+.contentBox {
+  background-color: #fff;
+  margin: 10px 0;
+  padding: 16px;
+  .header {
+    display: flex;
+    align-items: center;
+    .userInfo {
+      flex: 1;
+      margin-left: 10px;
+      >p:nth-child(1){
+        font-weight: 500;
+        color: #000;
+      }
+    }
+  }
+  .content {
+    margin-top: 10px;
+    .contentText {
+      color: #000;
+    }
+  }
+  .actionBox {
+    padding-bottom: 8px;
+    text-align: right;
+    font-size: 16px;
+    margin-top: 4px;
+    border-width: 0 0 1px;
+    border-style: solid;
+    border-color: #e7e7e7;
+  }
+  .commentWrapper {
+    margin-top: 10px;
+    .commentBox {
+      display: flex;
+      margin-bottom: 10px;
+      .userInfo {
+        margin-left: 10px;
+        >p {
+          color: #000;
+          .nameStyle {
+            color: #295c9d;
+          }
+          .timeStyle {
+            color: #777;
+            font-size: 13px;
+            margin-right: 8px;
+          }
+          .iconMessage {
+            color: #777;
+            display: none;
+          }
+        }
+        &:hover {
+          .iconMessage {
+            display: inline;
+          }
+        }
+      }
+    }
+    .replyBox {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      margin-left: 40px;
+      .avatar {
+        width: 40px;
+      }
+      .userInfo {
+        flex: 1;
+        margin-left: 10px;
+        >p {
+          color: #000;
+          .nameStyle {
+            color: #295c9d;
+          }
+          .timeStyle {
+            color: #777;
+            font-size: 13px;
+            margin-right: 8px;
+          }
+          .iconMessage {
+            color: #777;
+            display: none;
+          }
+        }
+        &:hover {
+          .iconMessage {
+            display: inline;
+          }
+        }
+      }
+    }
+    .replyInput {
+      margin-left: 55px;
+      text-align: right;
+      .published {
+        margin: 10px 0;
+      }
+    }
+    .replyInputHeader {
+      text-align: right;
+      .published {
+        margin: 10px 0;
+      }
+    }
+  }
+  .pub {
+    text-align: right;
+      .published {
+        margin: 10px 0;
+      }
+  }
+}

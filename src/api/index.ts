@@ -4,6 +4,7 @@ import { BASE_URL } from '../config/index'
 import {
   AlbumByAlbumId,
   AlbumBySingerId,
+  DynamicInfoType,
   MusicByAlbumId,
   MusicByIdArrType,
   MusicByIdType,
@@ -129,4 +130,14 @@ export const getLikeMusicByUserId = (_id: string): Promise<UserLikeMusicType> =>
 // 根据用户id获取用户信息的接口
 export const getUserInfoByUserId = (_id: string): Promise<UserInfoType> => {
   return request.get(`${BASE_URL}/user/info`, { params: { _id } })
+}
+
+// 获取动态的接口
+export const getDynamic = (currentUserId: string): Promise<DynamicInfoType> => {
+  return request.get(`${BASE_URL}/dynamic/all`, { params: { currentUserId } })
+}
+
+// 修改用户喜欢的动态的接口
+export const UpdateLikeDynamic = (_id: string, type: 'like' | 'dislike', dynamic_id: string) => {
+  return request.post(`${BASE_URL}/user/change/like/dynamic`, { _id, type, dynamic_id })
 }

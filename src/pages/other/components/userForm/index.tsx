@@ -46,6 +46,9 @@ const UserForm: React.FC<IProps> = ({ tag }) => {
       }
     }
   }
+  const tologOrReg = () => {
+    tag === 'login' ? navigate('/registered') : navigate('/login')
+  }
   return isLogin ? (
     <Navigate to="/t/home" />
   ) : (
@@ -71,6 +74,9 @@ const UserForm: React.FC<IProps> = ({ tag }) => {
           <FormItem>
             <Button type="primary" htmlType="submit" block>
               {tag === 'login' ? '登录' : '注册'}
+            </Button>
+            <Button type="link" block style={{ textAlign: 'right' }} onClick={tologOrReg}>
+              {tag === 'login' ? '去注册' : '去登录'}
             </Button>
           </FormItem>
         </Form>
