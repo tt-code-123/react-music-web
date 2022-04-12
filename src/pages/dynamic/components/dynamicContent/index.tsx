@@ -16,29 +16,27 @@ interface IProps {
 }
 const { TextArea } = Input
 function formateData(v: DynamicDataType) {
-  const value = { ...v }
-  if (value.commentInfo.length) {
-    for (var i = 0; i < value.commentInfo.length; i++) {
-      if (!value.commentInfo[i].to_id) {
-        const arr = []
-        value.commentInfo[i].children = []
-        for (var j = 0; j < value.commentInfo.length; j++) {
-          if (value.commentInfo[i]._id !== value.commentInfo[j]._id && value.commentInfo[j].p_id === value.commentInfo[i].p_id) {
-            value.commentInfo[i].children.push(value.commentInfo[j])
+  const { commentInfo } = v
+  if (commentInfo.length > 0) {
+    return {
+      ...v,
+      commentInfo: commentInfo
+        .filter((ele) => !ele.to_id)
+        .map((comment) => {
+          return {
+            ...comment,
+            children: commentInfo.filter((ele) => ele.p_id === comment.p_id && ele.to_id),
           }
-        }
-        arr.push(value.commentInfo[i])
-        value.commentInfo = arr
-      }
+        }),
     }
+  } else {
+    return v
   }
-  return value
 }
 const DynamicContent: React.FC<IProps> = ({ data, setDynamicItem }) => {
   const commentData = useMemo(() => {
     return formateData(data)
   }, [data])
-  const areRef = useRef(null)
   const { user } = useSelector(
     (state: ReducerStates) => ({
       user: state.userInfo.user,
@@ -59,14 +57,22 @@ const DynamicContent: React.FC<IProps> = ({ data, setDynamicItem }) => {
   const handleClickIcon = (idx?: number, ids?: number) => {
     const newData = { ...data }
     if (ids != undefined) {
-      newData.commentInfo[idx].children[ids].isShowArea = !newData.commentInfo[idx].children[ids].isShowArea
+      newData.commentInfo.map((item) => {
+        if (item._id === commentData.commentInfo[idx].children[ids]._id) {
+          item.isShowArea = !item.isShowArea
+        }
+        return item
+      })
     } else if (idx !== undefined) {
-      newData.commentInfo[idx].isShowArea = !newData.commentInfo[idx].isShowArea
+      newData.commentInfo.map((item) => {
+        if (item._id === commentData.commentInfo[idx]._id) {
+          item.isShowArea = !item.isShowArea
+        }
+        return item
+      })
     } else {
       newData.isShowArea = !newData.isShowArea
     }
-    // areRef.current.focus()
-
     setDynamicItem(newData)
   }
   const handleClickLikeIcon = () => {
@@ -131,23 +137,15 @@ const DynamicContent: React.FC<IProps> = ({ data, setDynamicItem }) => {
                       </p>
                     </div>
                   </div>
-                  {item.children?.map((iten, ids) => (
-                    <DynamicItem
-                      ref={areRef}
-                      iten={iten}
-                      ids={ids}
-                      idx={idx}
-                      key={iten._id}
-                      clickIcon={handleClickIcon}
-                      areaChange={handleAreaChange}
-                    />
-                  ))}
-                  <div className={styles.replyInputHeader} style={{ display: item.isShowArea ? 'block' : 'none' }}>
-                    <TextArea allowClear autoSize value={item.value} onChange={(e) => handleAreaChange(e, idx)} />
+                  <div className={styles.pub} style={{ display: commentData.commentInfo[idx].isShowArea ? 'block' : 'none' }}>
+                    <TextArea allowClear autoSize value={data.value} onChange={(e) => handleAreaChange(e)} />
                     <Button className={styles.published} type="primary">
                       发表
                     </Button>
                   </div>
+                  {item.children?.map((iten, ids) => (
+                    <DynamicItem iten={iten} ids={ids} idx={idx} key={iten._id} clickIcon={handleClickIcon} areaChange={handleAreaChange} />
+                  ))}
                 </div>
               )
             })

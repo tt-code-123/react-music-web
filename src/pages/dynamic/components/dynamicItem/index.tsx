@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle, useRef } from 'react'
+import React, { useRef } from 'react'
 import { Avatar, Button, Tooltip } from 'antd'
 import { MessageOutlined, UserOutlined } from '@ant-design/icons'
 import TextArea from 'antd/lib/input/TextArea'
@@ -14,17 +14,8 @@ interface IProps {
   areaChange: (e: any, idx: number, ids?: number) => void
 }
 
-interface RefProps {
-  focus: () => void
-}
-
-const DynamicItem: React.ForwardRefRenderFunction<RefProps, IProps> = ({ iten, ids, idx, clickIcon, areaChange }, ref) => {
+const DynamicItem: React.FC<IProps> = ({ iten, ids, idx, clickIcon, areaChange }) => {
   const inputRef = useRef(null)
-  useImperativeHandle(ref, () => ({
-    focus: () => {
-      inputRef.current.focus()
-    },
-  }))
   return (
     <div>
       <div className={styles.replyBox}>
@@ -42,7 +33,15 @@ const DynamicItem: React.ForwardRefRenderFunction<RefProps, IProps> = ({ iten, i
           <p>
             <span className={styles.timeStyle}>{iten.create_time}</span>
             <Tooltip placement="top" title={'回复'}>
-              <MessageOutlined className={styles.iconMessage} onClick={() => clickIcon(idx, ids)} />
+              <MessageOutlined
+                className={styles.iconMessage}
+                onClick={() => {
+                  clickIcon(idx, ids)
+                  setTimeout(() => {
+                    inputRef.current.focus()
+                  }, 100)
+                }}
+              />
             </Tooltip>
           </p>
         </div>
@@ -57,4 +56,4 @@ const DynamicItem: React.ForwardRefRenderFunction<RefProps, IProps> = ({ iten, i
   )
 }
 
-export default forwardRef(DynamicItem)
+export default DynamicItem
