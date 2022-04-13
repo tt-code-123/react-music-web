@@ -141,3 +141,8 @@ export const getDynamic = (currentUserId: string): Promise<DynamicInfoType> => {
 export const UpdateLikeDynamic = (_id: string, type: 'like' | 'dislike', dynamic_id: string) => {
   return request.post(`${BASE_URL}/user/change/like/dynamic`, { _id, type, dynamic_id })
 }
+
+// 评论回复的接口
+export const addReply = (dynamic_id: string, content: string, create_time: string, from_id: string, p_id?: string, to_id?: string) => {
+  return request.post(`${BASE_URL}/comment/add/reply`, { content, p_id, dynamic_id, create_time, from_id, to_id })
+}

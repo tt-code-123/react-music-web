@@ -1,14 +1,15 @@
-import React, { useMemo, useRef } from 'react'
+import React, { useMemo } from 'react'
 import { Avatar, Tooltip, Input, Button, Space } from 'antd'
+import { shallowEqual, useSelector } from 'react-redux'
 import { LikeOutlined, MessageOutlined, UserOutlined } from '@ant-design/icons'
 
 import { DynamicDataType } from '@/api/type'
 import { BASE_URL } from '@/config'
-import styles from './style.module.less'
 import DynamicItem from '../dynamicItem'
-import { UpdateLikeDynamic } from '@/api'
-import { shallowEqual, useSelector } from 'react-redux'
+import { addReply, UpdateLikeDynamic } from '@/api'
 import { ReducerStates } from '@/redux/reducers'
+import dayjs from 'dayjs'
+import styles from './style.module.less'
 
 interface IProps {
   data: DynamicDataType
@@ -43,18 +44,39 @@ const DynamicContent: React.FC<IProps> = ({ data, setDynamicItem }) => {
     }),
     shallowEqual,
   )
+  /**textarea改变的回调 */
   const handleAreaChange = (e, idx?: number, ids?: number) => {
     const newData = { ...data }
     if (ids != undefined) {
-      newData.commentInfo[idx].children[ids].value = e.target.value
+      newData.commentInfo.map((item) => {
+        if (item._id === commentData.commentInfo[idx].children[ids]._id) {
+          item.value = e.target.value
+        }
+      })
     } else if (idx != undefined) {
-      newData.commentInfo[idx].value = e.target.value
+      newData.commentInfo.map((item) => {
+        if (item._id === commentData.commentInfo[idx]._id) {
+          item.value = e.target.value
+        }
+        return item
+      })
     } else {
       newData.value = e.target.value
     }
     setDynamicItem(newData)
   }
+  /**textarea失去焦点的回调 */
+  const handleAreaBlur = () => {
+    const newData = { ...data }
+    newData.isShowArea = false
+    newData.commentInfo.map((item) => {
+      item.isShowArea = false
+      return item
+    })
+  }
+  /**点击回复icon的回调 */
   const handleClickIcon = (idx?: number, ids?: number) => {
+    handleAreaBlur()
     const newData = { ...data }
     if (ids != undefined) {
       newData.commentInfo.map((item) => {
@@ -75,6 +97,7 @@ const DynamicContent: React.FC<IProps> = ({ data, setDynamicItem }) => {
     }
     setDynamicItem(newData)
   }
+  /**点击喜欢按钮的回调 */
   const handleClickLikeIcon = () => {
     if (data.like) {
       UpdateLikeDynamic(user && user._id, 'dislike', data._id).then(() => {
@@ -87,6 +110,35 @@ const DynamicContent: React.FC<IProps> = ({ data, setDynamicItem }) => {
         const newData = { ...data }
         newData.like = true
         setDynamicItem(newData)
+      })
+    }
+  }
+  /**
+   * 处理发表按钮的回调
+   */
+  const handlePub = (dynamic_id: string, from_id: string, p_id?: string, to_id?: string, idx?: number, ids?: number) => {
+    const create_time = dayjs().format('YYYY-MM-DD hh:mm')
+    const newData = { ...data }
+    let content = ''
+    if (ids != undefined) {
+      newData.commentInfo.forEach((item) => {
+        if (item._id === commentData.commentInfo[idx].children[ids]._id) {
+          content = item.value
+        }
+      })
+    } else if (idx !== undefined) {
+      newData.commentInfo.forEach((item) => {
+        if (item._id === commentData.commentInfo[idx]._id) {
+          content = item.value
+        }
+        return item
+      })
+    } else {
+      content = newData.value
+    }
+    if (content) {
+      addReply(dynamic_id, content, create_time, from_id, p_id, to_id).then((data) => {
+        console.log(data, '132')
       })
     }
   }
@@ -138,8 +190,13 @@ const DynamicContent: React.FC<IProps> = ({ data, setDynamicItem }) => {
                     </div>
                   </div>
                   <div className={styles.pub} style={{ display: commentData.commentInfo[idx].isShowArea ? 'block' : 'none' }}>
-                    <TextArea allowClear autoSize value={data.value} onChange={(e) => handleAreaChange(e)} />
-                    <Button className={styles.published} type="primary">
+                    <TextArea allowClear autoSize value={commentData.commentInfo[idx].value} onChange={(e) => handleAreaChange(e, idx)} />
+                    <Button
+                      className={styles.published}
+                      type="primary"
+                      onClick={() =>
+                        handlePub(data._id, user && user._id, commentData.commentInfo[idx].p_id, commentData.commentInfo[idx].from_id, idx)
+                      }>
                       发表
                     </Button>
                   </div>
@@ -153,7 +210,7 @@ const DynamicContent: React.FC<IProps> = ({ data, setDynamicItem }) => {
       </div>
       <div className={styles.pub} style={{ display: data.isShowArea ? 'block' : 'none' }}>
         <TextArea allowClear autoSize value={data.value} onChange={(e) => handleAreaChange(e)} />
-        <Button className={styles.published} type="primary">
+        <Button className={styles.published} type="primary" onClick={() => handlePub(data._id, user && user._id)}>
           发表
         </Button>
       </div>
