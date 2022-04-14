@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Avatar, Button, Popover, Space } from 'antd'
 import { ImportOutlined, UserOutlined } from '@ant-design/icons'
@@ -7,7 +7,7 @@ import { UploadFile } from 'antd/lib/upload/interface'
 
 import { ReducerStates } from '@/redux/reducers'
 import { deleteUserInfoAction, updateUserInfoAction } from '@/redux/action-creaters'
-import ImgUpload from '../imageUpload'
+import AvatarUpload from '../avatarUpload'
 import { BASE_URL } from '@/config'
 import { getUserInfoByUserId } from '@/api'
 import styles from './style.module.less'
@@ -49,7 +49,7 @@ const LayoutHeader: React.FC = ({ children }) => {
           <div className={styles.userInfo}>
             <Avatar className={styles.userAvatar} {...avatarProps} />
             <div>{user?.username}</div>
-            <ImgUpload
+            <AvatarUpload
               _id={(user as any)._id}
               onChange={(e) => {
                 handleUploadChange(e)
