@@ -138,8 +138,17 @@ const DynamicContent: React.FC<IProps> = ({ data, setDynamicItem }) => {
       content = newData.value
     }
     if (content) {
-      addReply(dynamic_id, content, create_time, from_id, p_id, to_id).then((data) => {
-        console.log(data, '132')
+      addReply(dynamic_id, content, create_time, from_id, p_id, to_id).then((res) => {
+        const newData = { ...data }
+        newData.commentInfo.push(res.data._doc)
+        newData.commentInfo.map((item) => {
+          item.value = ''
+          item.isShowArea = false
+          return item
+        })
+        newData.value = ''
+        newData.isShowArea = false
+        setDynamicItem(newData)
       })
     }
   }
@@ -168,7 +177,7 @@ const DynamicContent: React.FC<IProps> = ({ data, setDynamicItem }) => {
         </Space>
       </div>
       <div className={styles.commentWrapper}>
-        {commentData.commentInfo.length > 0
+        {commentData?.commentInfo?.length > 0
           ? commentData.commentInfo.map((item, idx) => {
               return (
                 <div key={item._id}>
