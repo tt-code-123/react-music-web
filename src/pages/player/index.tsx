@@ -160,14 +160,16 @@ const Player: React.FC = () => {
   return (
     <div className={styles.playerWrapper}>
       <LayoutHeader>
-        {isImmersion ? (
-          <div
-            onClick={() => setIsLight(!isLight)}
-            style={{ backgroundImage: isLight ? `url(${require('@/assets/img/moon.png')})` : `url(${require('@/assets/img/sun.png')})` }}
-            className={styles.playerIcon}></div>
-        ) : null}
-        <div className={styles.switchBtn}>
-          <Switch onChange={handleSwitchChange} checkedChildren="沉浸" unCheckedChildren="沉浸" />
+        <div className={styles.imBtn}>
+          {isImmersion ? (
+            <div
+              onClick={() => setIsLight(!isLight)}
+              style={{ backgroundImage: isLight ? `url(${require('@/assets/img/moon.png')})` : `url(${require('@/assets/img/sun.png')})` }}
+              className={styles.playerIcon}></div>
+          ) : null}
+          <div className={styles.switchBtn}>
+            <Switch onChange={handleSwitchChange} checkedChildren="沉浸" unCheckedChildren="沉浸" />
+          </div>
         </div>
         <div className={styles.headerSearchInput}>
           <input
@@ -294,7 +296,10 @@ const Player: React.FC = () => {
       <div className={styles.bgMask} style={{ backgroundColor: isLight ? 'hsla(0,0%,100%,.7)' : 'rgba(0,0,0,.8)' }}></div>
       <div
         className={styles.bgPlayer}
-        style={{ backgroundImage: defaultPlaylist.length && currentMusicInfo && `url(${BASE_URL}/${currentMusicInfo.music_img})` }}></div>
+        style={{
+          backgroundImage:
+            (likePlayList.length || defaultPlaylist.length) && currentMusicInfo && `url(${BASE_URL}/${currentMusicInfo.music_img})`,
+        }}></div>
     </div>
   )
 }

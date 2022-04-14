@@ -1,19 +1,19 @@
 .musiclyrics {
   position: relative;
-  height: 510px;
+  height: calc(100vh - 265px);
   overflow: scroll;
   &::-webkit-scrollbar {
     display: none;
   }
-  >ul {
+  > ul {
     position: absolute;
     left: 50%;
     width: 100%;
     transform: translateX(-50%);
     .musicLyricsLight {
-      color: #E91E63!important;
+      color: #e91e63 !important;
     }
-    >li {
+    > li {
       height: 50px;
       width: 100%;
       font-size: 22px;
@@ -21,5 +21,4 @@
       text-align: center;
     }
   }
-  
 }

@@ -137,8 +137,8 @@ const DynamicContent: React.FC<IProps> = ({ data, setDynamicItem }) => {
       content = newData.value
     }
     if (content) {
-      addReply(dynamic_id, content, create_time, from_id, p_id, to_id).then((data) => {
-        console.log(data, '132')
+      addReply(dynamic_id, content, create_time, from_id, p_id, to_id).then((res) => {
+        console.log(res.data, '132')
       })
     }
   }

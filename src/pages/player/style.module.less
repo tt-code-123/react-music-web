@@ -1,25 +1,27 @@
 .playerWrapper {
-  position: relative;
-  .playerIcon {
-    position: absolute;
-    margin-right: 10px;
-    top: 22px;
-    left: 55%;
-    width: 28px;
-    height: 28px;
-    background-repeat: no-repeat;
-    &:hover {
-      cursor: pointer;
-    }
-  }
-  .switchBtn {
-    display: flex;
+  .imBtn {
     position: relative;
-    z-index: 100;
-    height: 100%;
-    margin-top: 25px;
-    margin-left: 620px;
-    margin-right: -70px;
+    .playerIcon {
+      position: absolute;
+      margin-right: 10px;
+      top: 22px;
+      right: 0;
+      width: 28px;
+      height: 28px;
+      background-repeat: no-repeat;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .switchBtn {
+      // display: flex;
+      position: relative;
+      z-index: 100;
+      height: 100%;
+      margin-top: 25px;
+      margin-left: 620px;
+      margin-right: -70px;
+    }
   }
   .headerSearchInput {
     position: relative;
@@ -34,18 +36,18 @@
       box-shadow: 0 2px 10px rgb(0 0 0 / 10%);
       border-radius: 1px;
       overflow: hidden;
-      transition: all .5s ease-in-out;
+      transition: all 0.5s ease-in-out;
       .lenvoBox {
-        >p{
+        > p {
           height: 40px;
           line-height: 40px;
           font-size: 14px;
-          color: #A4A3A8;
-          span:nth-child(1){
+          color: #a4a3a8;
+          span:nth-child(1) {
             width: 25px;
           }
         }
-        >div {
+        > div {
           padding: 0 25px;
           line-height: 34px;
           height: 34px;
@@ -58,12 +60,12 @@
         }
       }
       .historyBox {
-        >p{
+        > p {
           display: flex;
           padding: 0 25px;
           justify-content: space-between;
           font-size: 14px;
-          color: #A4A3A8;
+          color: #a4a3a8;
           height: 40px;
           line-height: 40px;
           span:nth-child(2) {
@@ -72,25 +74,25 @@
             }
           }
         }
-        >div {
+        > div {
           &:hover {
             cursor: pointer;
             background-color: #f5f5f5;
-            >p {
+            > p {
               color: #e91e63;
               span:nth-child(1) {
                 display: block;
               }
             }
           }
-          >p{
+          > p {
             display: flex;
             justify-content: space-between;
             padding: 0 25px;
             color: #333;
             height: 34px;
             line-height: 34px;
-            span:nth-child(1){
+            span:nth-child(1) {
               display: none;
               color: #333;
               margin-right: 5px;
@@ -100,7 +102,6 @@
               }
             }
           }
-          
         }
       }
     }
@@ -111,7 +112,7 @@
       width: 300px;
       outline: none;
       border-radius: 20px;
-      border:1px solid #ccc;
+      border: 1px solid #ccc;
       padding: 5px 15px;
       margin-right: 20px;
       vertical-align: middle;
@@ -123,7 +124,7 @@
       top: 2px;
       &:hover {
         color: #e91e63;
-        cursor: pointer; 
+        cursor: pointer;
       }
     }
   }
@@ -143,13 +144,13 @@
           display: inline-block;
           width: 12px;
           height: 12px;
-          content:'';
+          content: '';
           top: 20px;
           left: -20px;
           background: url('~@/assets/img/play.gif') no-repeat center;
         }
       }
-      >li {
+      > li {
         font-size: 16px;
         line-height: 50px;
         height: 50px;
@@ -161,7 +162,7 @@
     }
     .playerCenter {
       flex: 1;
-      max-height: 510px;
+      max-height: calc(100vh - 265px);
       overflow: auto;
     }
     .playerRight {
@@ -172,20 +173,20 @@
     .immersionLeft {
       position: relative;
       width: 33%;
-      height: 510px;
+      height: calc(100vh - 265px);
       .immersionBox {
         position: absolute;
         top: 50%;
         left: 50%;
         width: 250px;
         height: 280px;
-        transform: translate(-50%,-50%);
+        transform: translate(-50%, -50%);
         text-align: center;
-        >img {
+        > img {
           width: 190px;
           height: 190px;
         }
-        >p {
+        > p {
           height: 30px;
           line-height: 30px;
           text-align: center;
@@ -200,12 +201,11 @@
     }
     .immersionRight {
       width: 33%;
-      height: 510px;
+      height: calc(100vh - 265px);
     }
   }
   .bgPlayer {
     position: absolute;
-    background-image: url('http://localhost:8081/imgs/music_and_album_imgs/AM7be67f4731fd4ccb9a95b42f7875dd2b.jpg');
     top: 0;
     left: 0;
     width: 100%;
@@ -214,7 +214,7 @@
     background-size: cover;
     background-position: 50%;
     filter: blur(65px);
-    background-color: rgba(0,0,0,.6);
+    background-color: rgba(0, 0, 0, 0.6);
     // background-color: #969696;
     transform: translateZ(0);
     opacity: 0.8;
@@ -229,8 +229,8 @@
     height: 100vh;
     // background-color: hsla(0,0%,100%,.7);
     // background-color: #292a2b;
-    background-color: rgba(0,0,0,.8);
-    transition: background-color .5s ease-out;
+    background-color: rgba(0, 0, 0, 0.8);
+    transition: background-color 0.5s ease-out;
     z-index: -1;
   }
 }
