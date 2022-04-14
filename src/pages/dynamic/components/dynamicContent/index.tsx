@@ -18,7 +18,7 @@ interface IProps {
 const { TextArea } = Input
 function formateData(v: DynamicDataType) {
   const { commentInfo } = v
-  if (commentInfo.length > 0) {
+  if (commentInfo?.length > 0) {
     return {
       ...v,
       commentInfo: commentInfo
@@ -44,6 +44,7 @@ const DynamicContent: React.FC<IProps> = ({ data, setDynamicItem }) => {
     }),
     shallowEqual,
   )
+
   /**textarea改变的回调 */
   const handleAreaChange = (e, idx?: number, ids?: number) => {
     const newData = { ...data }
@@ -201,7 +202,16 @@ const DynamicContent: React.FC<IProps> = ({ data, setDynamicItem }) => {
                     </Button>
                   </div>
                   {item.children?.map((iten, ids) => (
-                    <DynamicItem iten={iten} ids={ids} idx={idx} key={iten._id} clickIcon={handleClickIcon} areaChange={handleAreaChange} />
+                    <DynamicItem
+                      dynamic_id={data._id}
+                      handlePubsub={handlePub}
+                      iten={iten}
+                      ids={ids}
+                      idx={idx}
+                      key={iten._id}
+                      clickIcon={handleClickIcon}
+                      areaChange={handleAreaChange}
+                    />
                   ))}
                 </div>
               )
