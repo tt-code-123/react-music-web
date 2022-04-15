@@ -18,7 +18,7 @@ interface IProps {
 const { TextArea } = Input
 function formateData(v: DynamicDataType) {
   const { commentInfo } = v
-  if (commentInfo.length > 0) {
+  if (commentInfo?.length > 0) {
     return {
       ...v,
       commentInfo: commentInfo
@@ -44,6 +44,7 @@ const DynamicContent: React.FC<IProps> = ({ data, setDynamicItem }) => {
     }),
     shallowEqual,
   )
+
   /**textarea改变的回调 */
   const handleAreaChange = (e, idx?: number, ids?: number) => {
     const newData = { ...data }
@@ -138,7 +139,16 @@ const DynamicContent: React.FC<IProps> = ({ data, setDynamicItem }) => {
     }
     if (content) {
       addReply(dynamic_id, content, create_time, from_id, p_id, to_id).then((res) => {
-        console.log(res.data, '132')
+        const newData = { ...data }
+        newData.commentInfo.push(res.data._doc)
+        newData.commentInfo.map((item) => {
+          item.value = ''
+          item.isShowArea = false
+          return item
+        })
+        newData.value = ''
+        newData.isShowArea = false
+        setDynamicItem(newData)
       })
     }
   }
@@ -167,7 +177,7 @@ const DynamicContent: React.FC<IProps> = ({ data, setDynamicItem }) => {
         </Space>
       </div>
       <div className={styles.commentWrapper}>
-        {commentData.commentInfo.length > 0
+        {commentData?.commentInfo?.length > 0
           ? commentData.commentInfo.map((item, idx) => {
               return (
                 <div key={item._id}>
@@ -201,7 +211,16 @@ const DynamicContent: React.FC<IProps> = ({ data, setDynamicItem }) => {
                     </Button>
                   </div>
                   {item.children?.map((iten, ids) => (
-                    <DynamicItem iten={iten} ids={ids} idx={idx} key={iten._id} clickIcon={handleClickIcon} areaChange={handleAreaChange} />
+                    <DynamicItem
+                      dynamic_id={data._id}
+                      handlePubsub={handlePub}
+                      iten={iten}
+                      ids={ids}
+                      idx={idx}
+                      key={iten._id}
+                      clickIcon={handleClickIcon}
+                      areaChange={handleAreaChange}
+                    />
                   ))}
                 </div>
               )

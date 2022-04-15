@@ -1,20 +1,17 @@
 import React, { useState } from 'react'
 import { Upload, Modal, message, Button } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
-import style from './style.module.less'
-import { BASE_URL } from '@/config'
 
 interface IProps {
   maxLength?: number
   value?: any
-  _id?: string
   multiple?: boolean
   showUploadList?: boolean
   onChange?: (obj: any) => void
 }
 
-const ImgUpload: React.FC<IProps> = (props) => {
-  const { value, onChange, maxLength = 1, _id, showUploadList = true, multiple = false } = props
+const AvatarUpload: React.FC<IProps> = (props) => {
+  const { value, onChange, maxLength = 6, showUploadList = true, multiple = false } = props
   const [previewVisible, setPreviewVisible] = useState(false)
   const [previewImage, setPreviewImage] = useState('')
   /**
@@ -43,9 +40,10 @@ const ImgUpload: React.FC<IProps> = (props) => {
     setPreviewVisible(true)
   }
   const uploadButton = (
-    <Button type="dashed" icon={<PlusOutlined />} block>
-      上传头像
-    </Button>
+    <div>
+      <PlusOutlined />
+      <div>上传图片</div>
+    </div>
   )
 
   /**
@@ -71,25 +69,24 @@ const ImgUpload: React.FC<IProps> = (props) => {
     <>
       <Upload
         name="image"
-        action="http://localhost:8081/user/upload/avatar"
+        // action="http://localhost:8081/user/upload/avatar"
         accept="image/png, image/jpeg, image/gif, image/jpg"
         beforeUpload={beforeUpload}
-        listType="picture"
+        listType="picture-card"
         fileList={value}
         multiple={multiple}
         showUploadList={showUploadList}
-        headers={{ _id: _id, authorization: localStorage.getItem('token') }}
+        headers={{ authorization: localStorage.getItem('token') }}
         onPreview={handlePreview}
-        className={style.imgList}
         maxCount={maxLength}
         onChange={imgListChange}>
-        {uploadButton}
+        {value?.length >= maxLength ? null : uploadButton}
       </Upload>
-      <Modal maskClosable={false} visible={previewVisible} footer={null} onCancel={handleCancel} destroyOnClose>
-        <img alt="example" className={style.img} src={previewImage} />
+      <Modal visible={previewVisible} footer={null} onCancel={handleCancel} destroyOnClose>
+        <img alt="example" src={previewImage} />
       </Modal>
     </>
   )
 }
 
-export default ImgUpload
+export default AvatarUpload
