@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Upload, Modal, message, Button } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
+
+import { BASE_URL } from '@/config'
 import style from './style.module.less'
 
 interface IProps {
@@ -70,7 +72,7 @@ const AvatarUpload: React.FC<IProps> = (props) => {
     <>
       <Upload
         name="image"
-        action="http://localhost:8081/user/upload/avatar"
+        action={`${BASE_URL}/user/upload/avatar`}
         accept="image/png, image/jpeg, image/gif, image/jpg"
         beforeUpload={beforeUpload}
         listType="picture"

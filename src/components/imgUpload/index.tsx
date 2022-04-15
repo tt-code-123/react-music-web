@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
-import { Upload, Modal, message, Button } from 'antd'
+import { Upload, Modal, message } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
+
+import { BASE_URL } from '@/config'
 
 interface IProps {
   maxLength?: number
@@ -60,7 +62,6 @@ const AvatarUpload: React.FC<IProps> = (props) => {
     }
     return isLt5M && isJpgOrPng
   }
-
   const imgListChange = (e) => {
     onChange && onChange(e)
   }
@@ -68,8 +69,8 @@ const AvatarUpload: React.FC<IProps> = (props) => {
   return (
     <>
       <Upload
-        name="image"
-        // action="http://localhost:8081/user/upload/avatar"
+        name="images"
+        action={`${BASE_URL}/dynamic/file`}
         accept="image/png, image/jpeg, image/gif, image/jpg"
         beforeUpload={beforeUpload}
         listType="picture-card"

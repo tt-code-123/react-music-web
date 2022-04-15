@@ -29,7 +29,7 @@ const Dynamic: React.FC = () => {
       <div className={styles.dynamicWrapper}>
         <div className={styles.dynamicBox}>
           <div className={styles.releaseBox}>
-            <TextArea allowClear autoSize />
+            <TextArea allowClear autoSize bordered={false} placeholder="这一刻的想法..." />
             <ImgUpload />
             <Button className={styles.published} type="primary">
               发表
