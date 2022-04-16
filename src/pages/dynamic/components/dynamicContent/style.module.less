@@ -19,6 +19,21 @@
     .contentText {
       color: #000;
     }
+    .contentImage {
+      display: flex;
+      flex-wrap: wrap;
+      >div {
+        width: 32%;
+        margin-right: 5px;
+        &:hover {
+          cursor: pointer;
+        }
+        >img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
   }
   .actionBox {
     padding-bottom: 8px;

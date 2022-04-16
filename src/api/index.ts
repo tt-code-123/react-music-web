@@ -146,3 +146,8 @@ export const UpdateLikeDynamic = (_id: string, type: 'like' | 'dislike', dynamic
 export const addReply = (dynamic_id: string, content: string, create_time: string, from_id: string, p_id?: string, to_id?: string) => {
   return request.post(`${BASE_URL}/comment/add/reply`, { content, p_id, dynamic_id, create_time, from_id, to_id })
 }
+
+// 发布动态的接口
+export const releaseDynamic = (dynamic_content: string, user_id: string, image_file: string[], release_time: string) => {
+  return request.post(`${BASE_URL}/dynamic/release`, { dynamic_content, user_id, image_file, release_time })
+}

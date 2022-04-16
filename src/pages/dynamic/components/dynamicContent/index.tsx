@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useRef } from 'react'
 import { Avatar, Tooltip, Input, Button, Space } from 'antd'
 import { shallowEqual, useSelector } from 'react-redux'
 import { LikeOutlined, MessageOutlined, UserOutlined } from '@ant-design/icons'
@@ -10,6 +10,7 @@ import { addReply, UpdateLikeDynamic } from '@/api'
 import { ReducerStates } from '@/redux/reducers'
 import dayjs from 'dayjs'
 import styles from './style.module.less'
+import ImgModal from '../imgModal'
 
 interface IProps {
   data: DynamicDataType
@@ -38,6 +39,7 @@ const DynamicContent: React.FC<IProps> = ({ data, setDynamicItem }) => {
   const commentData = useMemo(() => {
     return formateData(data)
   }, [data])
+  const imgModalRef = useRef(null)
   const { user } = useSelector(
     (state: ReducerStates) => ({
       user: state.userInfo.user,
@@ -168,7 +170,15 @@ const DynamicContent: React.FC<IProps> = ({ data, setDynamicItem }) => {
       </div>
       <div className={styles.content}>
         <div className={styles.contentText}>{data?.dynamic_content}</div>
-        <div className={styles.contentImage}>{data?.image_file.length > 0 ? '' : null}</div>
+        <div className={styles.contentImage}>
+          {data?.image_file.length > 0
+            ? data?.image_file.map((file) => (
+                <div key={file} onClick={() => imgModalRef.current.open(file)}>
+                  <img src={`${BASE_URL}/${file}`} alt="" />
+                </div>
+              ))
+            : null}
+        </div>
       </div>
       <div className={styles.actionBox}>
         <Space size={50}>
@@ -233,6 +243,7 @@ const DynamicContent: React.FC<IProps> = ({ data, setDynamicItem }) => {
           发表
         </Button>
       </div>
+      <ImgModal ref={imgModalRef} />
     </div>
   )
 }
