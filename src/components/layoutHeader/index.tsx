@@ -1,7 +1,7 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Avatar, Button, Popover, Space } from 'antd'
-import { ImportOutlined, UserOutlined } from '@ant-design/icons'
+import { EditOutlined, ImportOutlined, UserOutlined } from '@ant-design/icons'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { UploadFile } from 'antd/lib/upload/interface'
 
@@ -10,10 +10,12 @@ import { deleteUserInfoAction, updateUserInfoAction } from '@/redux/action-creat
 import AvatarUpload from '../avatarUpload'
 import { BASE_URL } from '@/config'
 import { getUserInfoByUserId } from '@/api'
+import EditPwdModel from './components/editPwdModel'
 import styles from './style.module.less'
 
 const LayoutHeader: React.FC = ({ children }) => {
   const [file, setFile] = useState<UploadFile[]>([])
+  const editRef = useRef(null)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { isLogin, token, user } = useSelector(
@@ -59,8 +61,14 @@ const LayoutHeader: React.FC = ({ children }) => {
             />
           </div>
           <p>
-            <ImportOutlined />
-            <span onClick={logOut}>退出登录</span>
+            <span onClick={() => editRef.current.open()}>
+              <EditOutlined />
+              修改密码
+            </span>
+            <span onClick={logOut}>
+              <ImportOutlined />
+              退出登录
+            </span>
           </p>
         </div>
       )
@@ -92,6 +100,7 @@ const LayoutHeader: React.FC = ({ children }) => {
           </Popover>
         </div>
       </div>
+      <EditPwdModel ref={editRef} />
     </div>
   )
 }

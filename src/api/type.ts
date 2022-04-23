@@ -23,6 +23,7 @@ export interface RecommendPlaylist {
   playlist_amount: string
   playlist_img: string
   playlist_name: string
+  playlist_url: string[]
 }
 export interface PlaylistType extends ResponseType {
   data: {

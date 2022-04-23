@@ -2,17 +2,22 @@ import React, { useEffect, useState } from 'react'
 import Slider from 'react-slick'
 import { CustomerServiceFilled } from '@ant-design/icons'
 import { Pagination } from 'antd'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 import { BASE_URL, playlistBox } from '@/config'
 import { formateNum } from '@/utils'
-import { getRecommendPlaylist } from '@/api'
+import { getMusicById, getRecommendPlaylist } from '@/api'
 import { RecommendPlaylist } from '@/api/type'
+import { saveDefaultPlaylistAction, savePlayCurrentMusicInfo } from '@/redux/action-creaters'
 import styles from './style.module.less'
 
 const PlayList: React.FC = () => {
   const [current, setCurrent] = useState<number>(1)
   const [totalCount, setTotalCount] = useState<number>()
   const [recommendPlaylist, setRecommendPlaylist] = useState<RecommendPlaylist[]>([])
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   useEffect(() => {
     getRecommendPlaylist(current, 15).then((res) => {
       if (res.status) {
@@ -21,8 +26,17 @@ const PlayList: React.FC = () => {
       }
     })
   }, [current])
+  /** 点击分页的回调 */
   const handlePageClick = (page: number, pageSize: number) => {
     setCurrent(page)
+  }
+  /** 点击歌单播放按钮的回调 */
+  const handleClickPlayCover = (sid: string, url: string[]) => {
+    getMusicById(sid).then((data) => {
+      dispatch(savePlayCurrentMusicInfo(data.data as any))
+      dispatch(saveDefaultPlaylistAction(url))
+      navigate('/player')
+    })
   }
   return (
     <div className={styles.wrapper}>
@@ -55,7 +69,12 @@ const PlayList: React.FC = () => {
                       <CustomerServiceFilled />
                       {formateNum(Number(item.playlist_amount))}
                     </span>
-                    <img className={styles.coverPlay} src={require('@/assets/img/cover_play_w.png')} alt="cover" />
+                    <img
+                      onClick={() => handleClickPlayCover(item.playlist_url[0], item.playlist_url)}
+                      className={styles.coverPlay}
+                      src={require('@/assets/img/cover_play_w.png')}
+                      alt="cover"
+                    />
                     <div className={styles.damaskeen}></div>
                   </div>
                   <p>{item.playlist_name}</p>

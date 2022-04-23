@@ -31,6 +31,12 @@ export const login = (username: string, password: string) => request.post(`${BAS
 // 注册请求
 export const register = (username: number, password: number) => request.post(`${BASE_URL}/user/register`, { username, password })
 
+// 修改密码
+export const updatePwd = (newPwd: string, _id: string) => request.post(`${BASE_URL}/user/updatePwd`, { newPwd, _id })
+
+// 确认原密码
+export const confirmOldPwd = (oldPwd: string, _id: string) => request.post(`${BASE_URL}/user/confirm`, { oldPwd, _id })
+
 // 获取轮播图图片url
 export const getBannerUrl = () => request.get(`${BASE_URL}/image/banner`)
 
