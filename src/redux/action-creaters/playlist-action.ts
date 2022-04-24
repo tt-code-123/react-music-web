@@ -4,7 +4,7 @@ import { DefaultPlaylistType } from '../type'
 
 export const saveDefaultPlaylistAction = (value: DefaultPlaylistType) => {
   const preDefaultPlaylist = localStorage.getItem('defaultPlaylist')
-  const defaultPlaylist = preDefaultPlaylist ? [...JSON.parse(preDefaultPlaylist), ...value] : []
+  const defaultPlaylist = preDefaultPlaylist ? [...JSON.parse(preDefaultPlaylist), ...value] : [...value]
   const newArr = removeDuplicate(defaultPlaylist)
   localStorage.setItem('defaultPlaylist', JSON.stringify(newArr))
   return { type: SAVE_DEFAULT_PLAYLIST, data: value }

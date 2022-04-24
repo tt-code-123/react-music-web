@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { DeleteOutlined, ExclamationCircleOutlined, HeartOutlined } from '@ant-design/icons'
-import { Button, Modal, Space } from 'antd'
+import { Button, message, Modal, Space } from 'antd'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 
 import { MusicArrInfo } from '@/api/type'
@@ -71,6 +71,14 @@ const MusicList: React.FC<IProps> = ({ defPlaylist, setDefPlaylist, isDefault })
   }
   /** 处理批量删除的回调 */
   const handleDelClick = () => {
+    const checkedList = defPlaylist.filter((item) => {
+      return item.isChecked
+    })
+
+    if (!checkedList.length) {
+      message.warning('请选择删除的歌曲')
+      return
+    }
     confirm({
       title: '确认删除选中歌曲？',
       icon: <ExclamationCircleOutlined />,
@@ -94,7 +102,7 @@ const MusicList: React.FC<IProps> = ({ defPlaylist, setDefPlaylist, isDefault })
           list.forEach((item) => {
             value.push(item._id)
           })
-          const currentSongId = value.find((item) => item === currentMusicInfo._id)
+          const currentSongId = value.find((item) => item === currentMusicInfo?._id)
           if (currentSongId) {
             const listIndex = []
             for (let i = 0; i < defPlaylist.length; i++) {
@@ -109,6 +117,10 @@ const MusicList: React.FC<IProps> = ({ defPlaylist, setDefPlaylist, isDefault })
             while (tIndex >= 0) {
               t = Math.floor(Math.random() * (defPlaylist.length - 1))
               tIndex = listIndex.find((item) => item === t)
+              if (defPlaylist.length === 2 && tIndex === 0) {
+                tIndex = -1
+                t = 1
+              }
             }
             dispatch(savePlayCurrentMusicInfo(defPlaylist[t]))
           }
