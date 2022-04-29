@@ -1,6 +1,6 @@
 import { removeDuplicate } from '@/utils'
 import { message } from 'antd'
-import { DELETE_DEFAULT_PLAYLIST, SAVE_DEFAULT_PLAYLIST } from '../action-types'
+import { DELETE_DEFAULT_PLAYLIST, SAVE_DEFAULT_PLAYLIST, SAVE_SORT_DEFAULT_PLAYLIST } from '../action-types'
 import { DefaultPlaylistType } from '../type'
 
 /** Action类型定义 */
@@ -32,6 +32,9 @@ export default function defaultPlaylistReducer(preState = initState, action: Act
         }
       }
       message.success('删除歌曲成功', 1)
+      return newState
+    case SAVE_SORT_DEFAULT_PLAYLIST:
+      newState = action.data
       return newState
     default:
       return preState

@@ -11,6 +11,9 @@ export const DELETE_USER_INFO = 'delete_user_info'
 // 保存默认播放列表
 export const SAVE_DEFAULT_PLAYLIST = 'save_default_playlist'
 
+// 保存默认播放列表
+export const SAVE_SORT_DEFAULT_PLAYLIST = 'save_sort_default_playlist'
+
 // 删除默认播放列表
 export const DELETE_DEFAULT_PLAYLIST = 'delete_default_playlist'
 

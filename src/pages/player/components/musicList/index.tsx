@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { DeleteOutlined, ExclamationCircleOutlined, HeartOutlined } from '@ant-design/icons'
+import { DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import { Button, message, Modal, Space } from 'antd'
+import { ReactSortable } from 'react-sortablejs'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 
 import { MusicArrInfo } from '@/api/type'
@@ -15,6 +16,7 @@ import { ReducerStates } from '@/redux/reducers'
 import { saveCurrentMusicIndex } from '@/redux/action-creaters/play-action'
 import styles from './style.module.less'
 import { delLikeMusic } from '@/api'
+import { saveSortDefaultPlaylistAction } from '@/redux/action-creaters/playlist-action'
 
 interface IProps {
   defPlaylist: MusicArrInfo[]
@@ -27,13 +29,14 @@ const MusicList: React.FC<IProps> = ({ defPlaylist, setDefPlaylist, isDefault })
   const dispatch = useDispatch()
   /** 表格头部checkbox状态 */
   const [totalChecked, setTotalChecked] = useState(false)
-  const { user, currentMusicInfo, isPlaying, defaultPlaylist } = useSelector(
+  const { user, currentMusicInfo, isPlaying, defaultPlaylist, currentMusicIndex } = useSelector(
     (state: ReducerStates) => ({
       currentMusicInfo: state.currentPlayingInfo.currentMusicInfo,
       isPlaying: state.currentPlayingInfo.isPlaying,
       defaultPlaylist: state.defaultPlaylist,
       user: state.userInfo.user,
       likePlaylist: state.likePlaylist,
+      currentMusicIndex: state.currentPlayingInfo.currentMusicIndex,
     }),
     shallowEqual,
   )
@@ -171,6 +174,15 @@ const MusicList: React.FC<IProps> = ({ defPlaylist, setDefPlaylist, isDefault })
     dispatch(saveIsPlayingStatus(true))
   }
 
+  const handleSortAble = () => {
+    if (isDefault) {
+      dispatch(saveSortDefaultPlaylistAction(defPlaylist.map((item) => item._id)))
+    }
+    if (currentMusicInfo) {
+      const index = defPlaylist.findIndex((item) => item._id === currentMusicInfo._id)
+      dispatch(saveCurrentMusicIndex(index))
+    }
+  }
   return (
     <>
       <Button
@@ -181,46 +193,46 @@ const MusicList: React.FC<IProps> = ({ defPlaylist, setDefPlaylist, isDefault })
         icon={<DeleteOutlined />}>
         批量删除
       </Button>
-      <table className={styles.musicList}>
-        <thead>
-          <tr>
-            <td>
-              <input type="checkbox" checked={totalChecked} onChange={handleHeaderCheckboxChange} />
-            </td>
-            <td>全选</td>
-            <td>歌曲</td>
-            <td>歌手</td>
-            <td>时长</td>
-            <td>操作</td>
-          </tr>
-        </thead>
-        <tbody>
+      <div className={styles.musicList}>
+        <ul className={styles.ulTitle}>
+          <li>
+            <input type="checkbox" checked={totalChecked} onChange={handleHeaderCheckboxChange} />
+          </li>
+          <li>全选</li>
+          <li>歌曲</li>
+          <li>歌手</li>
+          <li>时长</li>
+          <li>操作</li>
+        </ul>
+        <ReactSortable list={defPlaylist as any} setList={setDefPlaylist as any} animation={150} onEnd={handleSortAble}>
           {defPlaylist.length ? (
             defPlaylist.map((item, index) => {
               return (
-                <tr key={item._id} className={isPlaying && currentMusicInfo._id === item._id ? styles.playlistTr : ''}>
-                  <td>
+                <ul
+                  key={item._id}
+                  className={(isPlaying && currentMusicInfo._id === item._id ? styles.playlistTr : '') + ' ' + styles.musicTr}>
+                  <li>
                     <input type="checkbox" checked={item.isChecked} onChange={() => handleListCheckboxChange(index)} />
-                  </td>
-                  <td>{String(index).length > 1 ? index : '0' + String(index + 1)}</td>
-                  <td onClick={() => handleClickSingerName(index)}>{item.music_name}</td>
-                  <td>{item.singer_name}</td>
-                  <td>{item.music_time}</td>
-                  <td>
+                  </li>
+                  <li>{index + 1}</li>
+                  <li onClick={() => handleClickSingerName(index)}>{item.music_name}</li>
+                  <li>{item.singer_name}</li>
+                  <li>{item.music_time}</li>
+                  <li>
                     <Space size={20}>
                       <DeleteOutlined onClick={() => handleIconDel(item._id, index)} className={styles.delIcon} />
                     </Space>
-                  </td>
-                </tr>
+                  </li>
+                </ul>
               )
             })
           ) : (
-            <tr>
-              <td></td>
-            </tr>
+            <ul>
+              <li></li>
+            </ul>
           )}
-        </tbody>
-      </table>
+        </ReactSortable>
+      </div>
     </>
   )
 }

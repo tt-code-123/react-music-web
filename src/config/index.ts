@@ -1,6 +1,6 @@
 // 项目配置文件，保存通用性配置
 // 基本网络请求路径
-export const BASE_URL = 'http://localhost:8082'
+export const BASE_URL = 'http://8.130.103.73:8080'
 
 // 头部数据
 export const headerData = [
